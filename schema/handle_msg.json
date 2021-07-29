@@ -5,33 +5,66 @@
     {
       "type": "object",
       "required": [
-        "increment"
+        "send_payment"
       ],
       "properties": {
-        "increment": {
-          "type": "object"
+        "send_payment": {
+          "type": "object",
+          "required": [
+            "pay"
+          ],
+          "properties": {
+            "pay": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Coin"
+              }
+            }
+          }
         }
       }
     },
     {
       "type": "object",
       "required": [
-        "reset"
+        "reset_addr"
       ],
       "properties": {
-        "reset": {
+        "reset_addr": {
           "type": "object",
           "required": [
-            "count"
+            "address"
           ],
           "properties": {
-            "count": {
-              "type": "integer",
-              "format": "int32"
+            "address": {
+              "$ref": "#/definitions/HumanAddr"
             }
           }
         }
       }
     }
-  ]
+  ],
+  "definitions": {
+    "Coin": {
+      "type": "object",
+      "required": [
+        "amount",
+        "denom"
+      ],
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/Uint128"
+        },
+        "denom": {
+          "type": "string"
+        }
+      }
+    },
+    "HumanAddr": {
+      "type": "string"
+    },
+    "Uint128": {
+      "type": "string"
+    }
+  }
 }

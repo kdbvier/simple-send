@@ -3,16 +3,15 @@
   "title": "State",
   "type": "object",
   "required": [
-    "count",
-    "owner"
+    "owner",
+    "receive_addr"
   ],
   "properties": {
-    "count": {
-      "type": "integer",
-      "format": "int32"
-    },
     "owner": {
       "$ref": "#/definitions/CanonicalAddr"
+    },
+    "receive_addr": {
+      "$ref": "#/definitions/HumanAddr"
     }
   },
   "definitions": {
@@ -22,6 +21,9 @@
     },
     "CanonicalAddr": {
       "$ref": "#/definitions/Binary"
+    },
+    "HumanAddr": {
+      "type": "string"
     }
   }
 }

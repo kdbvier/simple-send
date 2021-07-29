@@ -1,12 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "InitMsg",
+  "title": "AddressResponse",
   "type": "object",
   "required": [
-    "receive_addr"
+    "address"
   ],
   "properties": {
-    "receive_addr": {
+    "address": {
       "$ref": "#/definitions/HumanAddr"
     }
   },
