@@ -1,6 +1,6 @@
 use cosmwasm_std::{
     log, to_binary, Api, BankMsg, Binary, Coin, CosmosMsg, Env, Extern, HandleResponse, HumanAddr,
-    InitResponse, Querier, StdError, StdResult, Storage,
+    InitResponse, Querier, StdError, StdResult, Storage, Uint128,
 };
 
 use crate::msg::{AddressResponse, HandleMsg, InitMsg, QueryMsg};
@@ -27,7 +27,7 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
     msg: HandleMsg,
 ) -> StdResult<HandleResponse> {
     match msg {
-        HandleMsg::SendPayment { pay } => send_payment(deps, env, pay),
+        HandleMsg::SendPayment {} => send_payment(deps, env),
         HandleMsg::ResetAddr { address } => reset_addr(deps, env, address),
     }
 }
@@ -35,13 +35,17 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
 pub fn send_payment<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
     _env: Env,
-    pay: Vec<Coin>,
 ) -> StdResult<HandleResponse> {
-    if _env.message.sent_funds.is_empty() || _env.message.sent_funds[0].denom != "ust" {
+    if _env.message.sent_funds.is_empty() || _env.message.sent_funds[0].denom != "uusd" {
         return Err(StdError::generic_err(
-            "You must pass some ust coins to send make a multisend",
+            "You must pass some ust coins to send make a payment",
         ));
     }
+
+    let amount = vec![Coin {
+        amount: Uint128::from(_env.message.sent_funds[0].amount.u128() / 10 * 9),
+        denom: _env.message.sent_funds[0].denom.to_string(),
+    }];
     let state = config_read(&deps.storage).load()?;
     let mut messages: Vec<CosmosMsg> = Vec::new();
     let from_address = _env.contract.address.clone();
@@ -49,7 +53,7 @@ pub fn send_payment<S: Storage, A: Api, Q: Querier>(
     messages.push(CosmosMsg::Bank(BankMsg::Send {
         from_address,
         to_address,
-        amount: pay,
+        amount,
     }));
 
     let r = HandleResponse {

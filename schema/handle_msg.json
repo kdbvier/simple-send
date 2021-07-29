@@ -9,18 +9,7 @@
       ],
       "properties": {
         "send_payment": {
-          "type": "object",
-          "required": [
-            "pay"
-          ],
-          "properties": {
-            "pay": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Coin"
-              }
-            }
-          }
+          "type": "object"
         }
       }
     },
@@ -45,25 +34,7 @@
     }
   ],
   "definitions": {
-    "Coin": {
-      "type": "object",
-      "required": [
-        "amount",
-        "denom"
-      ],
-      "properties": {
-        "amount": {
-          "$ref": "#/definitions/Uint128"
-        },
-        "denom": {
-          "type": "string"
-        }
-      }
-    },
     "HumanAddr": {
-      "type": "string"
-    },
-    "Uint128": {
       "type": "string"
     }
   }
