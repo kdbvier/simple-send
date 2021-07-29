@@ -1,0 +1,2 @@
+1644092c0657d49522fe2eaebddb0d7b5f145061c98c2f8edbb0f49d90146433  my_first_contract.wasm
+ea82299702f8802b8aefb0ef2da13909bed9a68a20ff1fe4ddf39730d659aa41  simple_send.wasm
